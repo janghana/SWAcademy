@@ -1,0 +1,8 @@
+A = set(map(int, input().split()))
+B = set(map(int, input().split()))
+union = A.union(B)
+intersection = A.intersection(B)
+diff = A.difference(B)
+print(*sorted(union))
+print(*sorted(intersection))
+print(*sorted(diff))
