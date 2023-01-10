@@ -1,4 +1,16 @@
 T = int(input())
+def fight(HP_M, HP_J, ATK_J, ATK_M):
+    nTrue = True
+    while True:
+        HP_M = HP_M - ATK_J
+        if HP_M <= 0:
+            break
+        HP_J = HP_J - ATK_M
+        if HP_J <= 0:
+            nTrue = False
+            break
+    return nTrue
+
 for _ in range(T):
     N, M = map(int, input().split())
     S = input()
@@ -9,67 +21,54 @@ for _ in range(T):
     index_end = {'O': []}
     result = False
     cnt = 0
+    nFight = fight(HP_M, HP_J, ATK_J, ATK_M)
     for i in S:
         if i == 'O':
             index_end['O'].append(cnt)
         elif i == '@':
-            index_start['@'] = S.index(i)
+            index_start['@'] = int(S.index(i))
         elif i == '&':
-            index_monster['&'] = S.index(i)
+            index_monster['&'] = int(S.index(i))
         cnt += 1
     for i in index_end['O']:
         if index_start['@'] - i > 0:
             if index_monster['&'] > index_start['@']:
                 count = 0
-                for i in S[i + 1:index_start['@']]:
-                    if i == "#":
+                for j in S[i + 1:index_start['@']]:
+                    if j == "#":
                         count += 1
                 if count <= M:
                     result = True
                     break
             else:
                 count = 0
-                nTrue = True
-                for i in S[i + 1:index_start['@']]:
-                    if i == "#":
+                fi = True
+                for j in S[i + 1:index_start['@']]:
+                    if j == "#":
                         count += 1
-                    elif i == "&":
-                        while True:
-                            HP_M = HP_M - ATK_J
-                            if HP_M <= 0:
-                                break
-                            HP_J = HP_J - ATK_M
-                            if HP_J <= 0:
-                                nTrue = False
-                                break
-                if count <= M and nTrue:
+                    if j == "&":
+                        fi = nFight
+                if count <= M and fi:
                     result = True
                     break
         elif index_start['@'] - i < 0:
             if index_monster['&'] < index_start['@']:
                 count = 0
-                for i in S[index_start['@'] + 1:i]:
-                    if i == "#":
+                for j in S[index_start['@'] + 1:i]:
+                    if j == "#":
                         count += 1
                 if count <= M:
                     result = True
                     break
             else:
                 count = 0
-                nTrue = True
-                for i in S[index_start['@'] + 1:i]:
-                    if i == "#":
+                fi = True
+                for j in S[index_start['@']+1:i]:
+                    if j == "#":
                         count += 1
-                    elif i == "&":
-                        while True:
-                            HP_M = HP_M - ATK_J
-                            if HP_M <= 0:
-                                break
-                            HP_J = HP_J - ATK_M
-                            if HP_J <= 0:
-                                nTrue = False
-                                break
-                if count <= M and nTrue:
+                    if j == "&":
+                        fi = nFight
+                if count <= M and fi:
                     result = True
                     break
     if result:
