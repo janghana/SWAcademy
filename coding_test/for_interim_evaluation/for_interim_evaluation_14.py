@@ -2,7 +2,7 @@ T = int(input())
 for _ in range(T):
     N, M = map(int, input().split())
     S = input()
-    result = ''
+    result = []
     for _ in range(M):
         A, B = map(int, input().split())
         tmp = S[A - 1:B]
@@ -16,7 +16,7 @@ for _ in range(T):
         else:
             nTrue = False
         if nTrue:
-            result += '1'
+            result.append(1)
         else:
-            result += '0'
-    print(result)
+            result.append(0)
+    print()
